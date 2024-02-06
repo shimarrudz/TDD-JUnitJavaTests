@@ -1,14 +1,19 @@
 package br.com.shima;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class FirstTest {
 
+    @Mock
     Calculator calculator;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         calculator = new Calculator();
     }
@@ -23,11 +28,13 @@ public class FirstTest {
         Assertions.assertThat(result).isEqualTo(15);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldNotSumNegativeNumbers() {
         int num1 = -10, num2 = 5;
 
         calculator.sum(num1, num2);
+
+        org.junit.jupiter.api.Assertions.assertThrows( RuntimeException.class, () -> calculator.sum(num1, num2));
     }
 
     @Test
@@ -57,11 +64,13 @@ public class FirstTest {
         Assertions.assertThat(result).isEqualTo(2);
     }
 
-    @Test(expected = ArithmeticException.class)
+    @Test
     public void shoudNotDividePerZero() {
         int num1 = 10, num2 = 0;
 
         calculator.divide(num1, num2);
+
+        org.junit.jupiter.api.Assertions.assertThrows( ArithmeticException.class, () -> calculator.divide(num1, num2));
     }
 
 
